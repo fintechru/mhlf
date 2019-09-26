@@ -1,0 +1,12 @@
+fab3/fab3
+fabric
+fabric-chaincode-evm
+smart-contracts/fabric-bridge/.idea
+smart-contracts/fabric-bridge/build
+smart-contracts/fabric-bridge/contract_address
+network/channel-artifacts/channel.tx
+network/channel-artifacts/genesis.block
+network/channel-artifacts/Org1MSPanchors.tx
+network/channel-artifacts/Org2MSPanchors.tx
+network/crypto-config/ordererOrganizations
+network/crypto-config/peerOrganizations

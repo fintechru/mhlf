@@ -1,0 +1,6 @@
+[submodule "fabric"]
+	path = fabric
+	url = https://github.com/hyperledger/fabric
+[submodule "fabric-chaincode-evm"]
+	path = fabric-chaincode-evm
+	url = https://github.com/hyperledger/fabric-chaincode-evm
