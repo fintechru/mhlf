@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="ethereumex" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/ethereumex/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/ethereumex/lib" />
+    </SOURCES>
+  </library>
+</component>

@@ -80,3 +80,7 @@ curl http://127.0.0.1:5000 -X POST -H "Content-Type:application/json" -d '{
     {"fromBlock":"earliest"}]
 }'
 ```
+
+1. Проверяем Fab3
+
+curl http://127.0.0.1:5000 -X POST -H "Content-Type:application/json" -d '{"jsonrpc":"2.0","method": "eth_blockNumber","id":1,"params":[]}'

@@ -11,7 +11,7 @@ cd "$CURRENT_DIR"
 
 docker exec -it cli env
 
-cd smart-contracts/fabric-bridge
+cd dev/sc/evmcc-bridge
 
 CONTRACT_BIN=`cat build/FabricBridge.bin`
 

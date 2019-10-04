@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="keccakf1600" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/keccakf1600/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/keccakf1600/src" />
+      <root url="file://$PROJECT_DIR$/deps/keccakf1600/c_src" />
+    </SOURCES>
+  </library>
+</component>

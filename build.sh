@@ -23,7 +23,7 @@ fi
 
 cd "$CURRENT_DIR"
 
-cd smart-contracts/fabric-bridge
+cd dev/sc/evmcc-bridge
 rm -rf build/
 ./compile.sh
 
