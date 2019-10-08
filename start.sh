@@ -2,7 +2,7 @@
 
 CURRENT_DIR=$PWD
 
-cd network
+cd network/fabric
 ./evmnet.sh down
 # ./evmnet.sh up -o etcdraft
 ./evmnet.sh up

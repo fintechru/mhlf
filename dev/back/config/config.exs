@@ -18,7 +18,7 @@ config :bridge, BridgeAppWeb.Endpoint,
   render_errors: [view: BridgeAppWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: BridgeApp.PubSub, adapter: Phoenix.PubSub.PG2]
 
-# Configures Elixir's Logger
+# Конфигурируем логгер
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
@@ -26,10 +26,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Connect to Masterchain node by port ; WebSocket: ws://localhost:8545
+# Подключаемся к Ethereum узлу по порту ; WebSocket: ws://localhost:8545
 config :ethereumex, url: "http://localhost:8545"
 
+# Подключаемся к IPC Ethereum
 config :ethereumex, ipc_path: "docker exec -it geth-node go-ethereum/build/bin/geth attach /root/.ethereum/geth.ipc"
+
+config :fabric_network, fabric_network_url: "http://localhost:8545"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

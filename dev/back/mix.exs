@@ -33,7 +33,6 @@ defmodule BridgeApp.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-#       {:exw3, "~> 0.4.2"},
       {:abi, "~> 0.1.13"},
       {:ethereumex, "~> 0.5.4"},
       {:phoenix, "~> 1.4.10"},
@@ -43,7 +42,10 @@ defmodule BridgeApp.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.4.0"},
+      {:poison, "~> 3.1"},
+      {:gen_stage, "~> 0.11"}
     ]
   end
 

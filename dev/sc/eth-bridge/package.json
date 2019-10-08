@@ -1,0 +1,17 @@
+{
+  "name": "htlc",
+  "version": "0.0.1",
+  "private": true,
+  "description": "HTLС",
+  "author": "",
+  "repository": "",
+  "keywords": [],
+  "dependencies": {
+    "@openzeppelin/contracts": "^2.3.0",
+    "truffle": "4.1.6",
+    "web3": "0.20.2"
+  },
+  "scripts": {
+    "compile": "truffle compile"
+  }
+}
