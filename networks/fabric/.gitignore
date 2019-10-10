@@ -1,0 +1,4 @@
+/channel-artifacts/
+/crypto-config/ordererOrganizations/example.com/
+/crypto-config/peerOrganizations/org1.example.com/
+/crypto-config/peerOrganizations/org2.example.com/

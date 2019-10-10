@@ -4,3 +4,9 @@
 [submodule "fabric-chaincode-evm"]
 	path = src/fabric-chaincode-evm
 	url = https://github.com/hyperledger/fabric-chaincode-evm
+[submodule "src/fabric"]
+	path = src/fabric
+	url = https://github.com/hyperledger/fabric
+[submodule "src/fabric-chaincode-evm"]
+	path = src/fabric-chaincode-evm
+	url = https://github.com/hyperledger/fabric-chaincode-evm

@@ -4,10 +4,10 @@ git submodule init
 git submodule update
 
 CURRENT_DIR=$PWD
-FABRIC_BIN=src/fabric-src/.build/bin
+FABRIC_BIN=src/fabric/.build/bin
 FABRIC_EVMCC=$(go env GOPATH)/src/github.com/hyperledger/fabric-chaincode-evm/bin
 
-cd src/fabric-src
+cd src/fabric
 if [ ! -d "$FABRIC_BIN" ]; then
 make dist-clean native
 fi

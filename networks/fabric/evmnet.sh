@@ -116,7 +116,7 @@ BLACKLISTED_VERSIONS="^1\.0\. ^1\.1\.0-preview ^1\.1\.0-alpha"
 function checkPrereqs() {
   # Note, we check configtxlator externally because it does not require a config file, and peer in the
   # docker image because of FAB-8551 that makes configtxlator return 'development version' in docker
-  LOCAL_VERSION=$(../../src/fabric-src/.build/bin/configtxlator version | sed -ne 's/ Version: //p')
+  LOCAL_VERSION=$(../../src/fabric/.build/bin/configtxlator version | sed -ne 's/ Version: //p')
   DOCKER_IMAGE_VERSION=$(docker run --rm hyperledger/fabric-tools:$IMAGETAG peer version | sed -ne 's/ Version: //p' | head -1)
 
   echo "LOCAL_VERSION=$LOCAL_VERSION"
@@ -340,7 +340,7 @@ function replacePrivateKey() {
 
 # Generates Org certs using cryptogen tool
 function generateCerts() {
-  which ../../src/fabric-src/.build/bin/cryptogen
+  which ../../src/fabric/.build/bin/cryptogen
   if [ "$?" -ne 0 ]; then
     echo "cryptogen tool not found. exiting"
     exit 1
@@ -354,7 +354,7 @@ function generateCerts() {
     rm -Rf crypto-config
   fi
   set -x
-  ../../src/fabric-src/.build/bin/cryptogen generate --config=./crypto-config.yaml
+  ../../src/fabric/.build/bin/cryptogen generate --config=./crypto-config.yaml
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -403,7 +403,7 @@ function generateCerts() {
 # Generate orderer genesis block, channel configuration transaction and
 # anchor peer update transactions
 function generateChannelArtifacts() {
-  which ../../src/fabric-src/.build/bin/configtxgen
+  which ../../src/fabric/.build/bin/configtxgen
   if [ "$?" -ne 0 ]; then
     echo "configtxgen tool not found. exiting"
     exit 1
@@ -417,11 +417,11 @@ function generateChannelArtifacts() {
   echo "CONSENSUS_TYPE="$CONSENSUS_TYPE
   set -x
   if [ "$CONSENSUS_TYPE" == "solo" ]; then
-    ../../src/fabric-src/.build/bin/configtxgen -profile TwoOrgsOrdererGenesis -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
+    ../../src/fabric/.build/bin/configtxgen -profile TwoOrgsOrdererGenesis -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
   elif [ "$CONSENSUS_TYPE" == "kafka" ]; then
-    ../../src/fabric-src/.build/bin/configtxgen -profile SampleDevModeKafka -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
+    ../../src/fabric/.build/bin/configtxgen -profile SampleDevModeKafka -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
   elif [ "$CONSENSUS_TYPE" == "etcdraft" ]; then
-    ../../src/fabric-src/.build/bin/configtxgen -profile SampleMultiNodeEtcdRaft -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
+    ../../src/fabric/.build/bin/configtxgen -profile SampleMultiNodeEtcdRaft -channelID $SYS_CHANNEL -outputBlock ./channel-artifacts/genesis.block
   else
     set +x
     echo "unrecognized CONSESUS_TYPE='$CONSENSUS_TYPE'. exiting"
@@ -438,7 +438,7 @@ function generateChannelArtifacts() {
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
   set -x
-  ../../src/fabric-src/.build/bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
+  ../../src/fabric/.build/bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -451,7 +451,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for Org1MSP   ##########"
   echo "#################################################################"
   set -x
-  ../../src/fabric-src/.build/bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
+  ../../src/fabric/.build/bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP
   res=$?
   set +x
   if [ $res -ne 0 ]; then
@@ -464,7 +464,7 @@ function generateChannelArtifacts() {
   echo "#######    Generating anchor peer update for Org2MSP   ##########"
   echo "#################################################################"
   set -x
-  ../../src/fabric-src/.build/bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate \
+  ../../src/fabric/.build/bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate \
     ./channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
   res=$?
   set +x
