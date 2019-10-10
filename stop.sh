@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd network/fabric
+cd networks/fabric
 ./evmnet.sh down

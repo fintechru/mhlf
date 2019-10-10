@@ -107,7 +107,7 @@ defmodule BridgeApp.Utils.Ethereum do
     Ethereumex.HttpClient.eth_get_transaction_receipt(tx_hash)
   end
 
-  # Получить 4byte сигнатры метода
+  # Получить 4byte сигнатры метода, аргемент должен быть в лвойных кавычках
   def get_four_bytes(method_sign) do
     :keccakf1600.hash(:sha3_256, method_sign)
     |> Base.encode16()
