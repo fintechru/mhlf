@@ -2,4 +2,4 @@
 
 ./compile.sh
 # TODO: check build artifacts
-truffle migrate --network test
+truffle migrate --network development

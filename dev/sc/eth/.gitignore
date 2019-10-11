@@ -3,5 +3,8 @@
 /build/
 package-lock.json
 yarn.lock
-eth_contract_address
+eth_bridge_address
+eth_htlc_address
 fabric_contract_address
+eth_contract_address
+deploy_log
