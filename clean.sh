@@ -7,7 +7,8 @@ rm fab3/fab3
 # rf -rf fabric-chaincode-evm
 rm -rf dev/sc/eth/.idea
 rm -rf dev/sc/eth/build
-rm dev/sc/eth/contract_address
+rm dev/sc/eth/eth_contract_address
+rm dev/sc/eth/fabric_contract_address
 rm networks/fabric/channel-artifacts/channel.tx
 rm networks/fabric/channel-artifacts/genesis.block
 rm networks/fabric/channel-artifacts/Org1MSPanchors.tx

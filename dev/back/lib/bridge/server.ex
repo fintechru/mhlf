@@ -1,43 +1,25 @@
-defmodule BridgeApp.Server do
-  @moduledoc false
+defmodule BridgeApp.Bridge.Server do
+  use GenServer
 
-  require Logger
-
-  def accept(port) do
-    # The options below mean:
-    #
-    # 1. `:binary` - receives data as binaries (instead of lists)
-    # 2. `packet: :line` - receives data line by line
-    # 3. `active: false` - blocks on `:gen_tcp.recv/2` until data is available
-    # 4. `reuseaddr: true` - allows us to reuse the address if the listener crashes
-    #
-    {:ok, socket} =
-      :gen_tcp.listen(port, [:binary, packet: :line, active: false, reuseaddr: true])
-
-    Logger.info("Accepting connections on port #{port}")
-    loop_acceptor(socket)
+  def init(state) do
+    {:ok, state}
   end
 
-  defp loop_acceptor(socket) do
-    {:ok, client} = :gen_tcp.accept(socket)
-    serve(client)
-    loop_acceptor(socket)
+  def handle_cast({:add_message, new_message}, messages) do
+    {:noreply, [new_message | messages]}
+  end
+  def handle_call(:get_messages, _from, messages) do
+    {:reply, messages, messages}
+  end
+  def handle_call(:queue, _from, state) do
+    {:reply, state, state}
+  end
+  def handle_call(:dequeue, _from, []), do: {:reply, nil, []}
+  def handle_call(:dequeue, _from, [value | state]) do
+    {:reply, value, state}
+  end
+  def handle_cast({:enqueue, value}, state) do
+    {:noreply, state ++ [value]}
   end
 
-  defp serve(socket) do
-    socket
-    |> read_line()
-    |> write_line(socket)
-
-    serve(socket)
-  end
-
-  defp read_line(socket) do
-    {:ok, data} = :gen_tcp.recv(socket, 0)
-    data
-  end
-
-  defp write_line(line, socket) do
-    :gen_tcp.send(socket, line)
-  end
 end

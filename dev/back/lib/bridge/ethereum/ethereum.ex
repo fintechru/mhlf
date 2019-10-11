@@ -1,40 +1,83 @@
-defmodule BridgeApp.Bridge.Ethereum do
+defmodule BridgeApp.Bridge.EthereumListener do
   require Logger
   alias Ethereumex.HttpClient
+  use GenStage
 
-  def listen(contract_address, topics) do
+  @interval 1_000
+
+  def start_link do
+    {:ok, pid} = Task.start_link(
+      fn ->
+        loop(%{time: :random.uniform, voltage: 42})
+      end
+    )
+    Task.start_link(fn -> tick([interval: @interval, pid: pid]) end)
+    {:ok, pid}
+  end
+
+  # consumer’s loop
+  defp loop(map) do
+    receive do
+      {:state, caller} -> # state requested
+        send caller, {:voltage, Map.get(map, :voltage)}
+        loop(map)
+      {:ping} -> # tick
+        loop(
+          map
+          |> Map.put(:voltage, map.voltage + 1)
+          |> Map.put(:time, map.time + :random.uniform / 12)
+        )
+    end
+  end
+
+  # listener
+  defp tick(init) do
+    IO.inspect init, label: "Tick"
+    send init[:pid], {:ping}
+    Process.sleep(init[:interval])
+    tick(init)
+  end
+
+  def init(state) do
+    Process.send_after(self(), :work, @interval)
+    {:ok, %{last_run_at: nil}}
+  end
+
+  def handle_info(:work, state) do
+
+    listen()
+
+    Process.send_after(self(), :work, @interval)
+
+    {:noreply, %{last_run_at: :calendar.local_time()}}
+
+  end
+
+  def listen() do
+
+    # TODO: улучшить - сохранять номер блока, на котором остановилась прошлая проверка
+    contract_address = Application.get_env(:eth_contract, :eth_contract_address)
+    topics = Application.get_env(:eth_contract, :eth_contract_topics)
+
+    IO.puts("address: " <> contract_address)
+    IO.puts("topics: " <> topics)
 
     {:ok, result} = BridgeApp.Utils.Ethereum.get_logs(contract_address, topics)
 
-    IO.puts result
+    IO.puts("event logs: " <> result)
 
-#    {:ok, <<_ :: binary>>} = result
+    listen()
 
-    # {:ok, filter_simple} = ExW3.Contract.filter(:MethMain, "RequestForSignature", %{fromBlock: 0, toBlock: "latest"})
-    # contract_instance.init_event(contract_instance, ExW3.load_abi("contracts/MethMain.abi"))
+    #    with url <- Application.get_env(:fabric_network, :fabric_network_url),
+    #         # скорректировать method, params
+    #         command <- %{jsonrpc: "2.0", method: "web3_clientVersion", params: [], id: 67},
+    #         body <- Poison.encode!(command),
+    #         headers <- [{"Content-Type", "application/json"}]
+    #      do
+    #      HTTPoison.post!(url, body, headers)
+    #    end
 
-    # {:ok, filter} = contract_instance.filter(contract_name, event_name)
-    # {:ok, changes} = contract_instance.get_filter_changes(filter)
-
-#    with url <- Application.get_env(:fabric_network, :fabric_network_url),
-#         # скорректировать method, params
-#         command <- %{jsonrpc: "2.0", method: "web3_clientVersion", params: [], id: 67},
-#         body <- Poison.encode!(command),
-#         headers <- [{"Content-Type", "application/json"}]
-#      do
-#      HTTPoison.post!(url, body, headers)
-#    end
-
-    # принимать сообщения, нужно ли этому модулю принимать сообщения?
-#    receive do
-#      {:ok, result} -> handle_event_changes("changes")
-#    end
-
-    # Recurse
-    listen(contract_address, topics)
   end
-
-
 
   defp handle_event_changes([]) do
     IO.puts 1

@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract HashedTimelock {
+contract HashedTimelockContract {
 
     event LogHTLCNew(
         bytes32 indexed contractId,

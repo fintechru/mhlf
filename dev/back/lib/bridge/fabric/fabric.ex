@@ -1,4 +1,4 @@
-defmodule BridgeApp.Bridge.Fabric do
+defmodule BridgeApp.Bridge.FabricListener do
   @moduledoc false
 
   use GenStage

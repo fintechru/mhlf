@@ -34,6 +34,9 @@ config :ethereumex, ipc_path: "docker exec -it geth-node go-ethereum/build/bin/g
 
 config :fabric_network, fabric_network_url: "http://localhost:8545"
 
+config :eth_contract, eth_contract_address: "ETH_CONTRACT_ADDRESS"
+config :eth_contract, eth_contract_topics: "ETH_CONTRACT_TOPICS"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

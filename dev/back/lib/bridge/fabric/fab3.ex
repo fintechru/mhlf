@@ -1,4 +1,4 @@
-defmodule BridgeApp.Bridge.Fab3 do
+defmodule BridgeApp.Bridge.Fab3Listener do
   @moduledoc false
 
   # Логика работы с сетью Фабрик
