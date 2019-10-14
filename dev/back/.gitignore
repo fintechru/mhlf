@@ -29,3 +29,4 @@ bridge-*.tar
 /.elixir_ls/
 bridge.iml
 .idea
+mix.lock

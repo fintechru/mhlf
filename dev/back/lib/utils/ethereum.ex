@@ -1,6 +1,5 @@
 defmodule BridgeApp.Utils.Ethereum do
   @moduledoc false
-
   alias Ethereumex.HttpClient
 
   # Деплой смарт-контракта
@@ -13,15 +12,16 @@ defmodule BridgeApp.Utils.Ethereum do
 
     tx = %{
       "from" => author,
-      "gas" => "0x47E7C4", # gas, # "0x76c0"
-      "gasPrice" => "0x47E7C4", # "0x9184e72a000"
+      # gas, # "0x76c0"
+      "gas" => "0x47E7C4",
+      # "0x9184e72a000"
+      "gasPrice" => "0x47E7C4",
       #      "value" => value, # "0x9184e72a",
       "data" => "0x" <> contract_bin
     }
 
     # TODO: подождать когда замайнится и получить рецепт с помощью get_tx_receipt
     {:ok, tx_hash} = Ethereumex.HttpClient.eth_send_transaction(tx)
-
   end
 
   # Вызов метода смарт-контракта
@@ -33,10 +33,11 @@ defmodule BridgeApp.Utils.Ethereum do
     {:ok, author} = Ethereumex.HttpClient.eth_coinbase()
 
     # Получение data: 4 байта сигнатуры метода + параметры в формате bytes32
-    data = ABI.encode(contract_method_sign, [method_data])
-           |> Base.encode16()
-           |> String.downcase()
-           |> (&("0x" <> &1)).()
+    data =
+      ABI.encode(contract_method_sign, [method_data])
+      |> Base.encode16()
+      |> String.downcase()
+      |> (&("0x" <> &1)).()
 
     tx = %{
       "from" => author,
@@ -58,10 +59,11 @@ defmodule BridgeApp.Utils.Ethereum do
     {:ok, author} = Ethereumex.HttpClient.eth_coinbase()
 
     # Получение data: 4 байта сигнатуры метода + параметры в формате bytes32
-    data = ABI.encode(contract_method_sign, [method_data])
-           |> Base.encode16()
-           |> String.downcase()
-           |> (&("0x" <> &1)).()
+    data =
+      ABI.encode(contract_method_sign, [method_data])
+      |> Base.encode16()
+      |> String.downcase()
+      |> (&("0x" <> &1)).()
 
     tx = %{
       "from" => author,
@@ -86,7 +88,6 @@ defmodule BridgeApp.Utils.Ethereum do
   # TODO: toBlock -
   # TODO: topics -
   def get_new_filter(contract_address, topics) do
-
     filter = %{
       # fromBlock: "0x1",
       # toBlock: "0x2",
@@ -112,7 +113,7 @@ defmodule BridgeApp.Utils.Ethereum do
     |> Base.encode16()
     |> String.downcase()
     |> (&("0x" <> &1)).()
-    |> (&(String.slice(&1, 0..9))).()
+    |> (&String.slice(&1, 0..9)).()
   end
 
   def get_code(contract_address) do
@@ -120,6 +121,6 @@ defmodule BridgeApp.Utils.Ethereum do
   end
 
   def get_hash(data) do
-      Enum.join(["0x", ExthCrypto.Hash.Keccak.kec(data) |> Base.encode16(case: :lower)], "")
+    Enum.join(["0x", ExthCrypto.Hash.Keccak.kec(data) |> Base.encode16(case: :lower)], "")
   end
 end

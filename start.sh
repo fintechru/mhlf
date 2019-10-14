@@ -6,5 +6,5 @@ CURRENT_DIR=$PWD
 
 cd scripts
 ./start_fabric.sh
-./start_eth.sh
-./start_demon.sh
+# ./start_eth.sh
+# ./start_demon.sh

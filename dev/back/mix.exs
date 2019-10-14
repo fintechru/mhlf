@@ -45,7 +45,8 @@ defmodule BridgeApp.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.4.0"},
       {:poison, "~> 3.1"},
-      {:gen_stage, "~> 0.11"}
+      {:gen_stage, "~> 0.11"},
+      {:exth_crypto, "~> 0.1.6"}
     ]
   end
 

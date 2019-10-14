@@ -58,8 +58,8 @@ defmodule BridgeApp.Bridge.EthereumListener do
     # TODO: улучшить - сохранять номер блока, на котором остановилась прошлая проверка
     bridge_contract_address = System.get_env(
       "ETH_BRIDGE_SMART_CONTRACT"
-    ) # Application.get_env(:eth_contract, :eth_bridge_contract_address)
-    topics = System.get_env("ETH_TOPICS") # Application.get_env(:eth_contract, :eth_contract_topics)
+    )
+    topics = System.get_env("ETH_TOPICS")
 
     IO.puts("address: " <> bridge_contract_address)
     IO.puts("topics: " <> topics)
